@@ -95,6 +95,7 @@ async def handle_group_messages(message: types.Message):
                 reply_to_message_id=entry.user_message_id
             )
         except TelegramBadRequest:
-            await message.reply("Foydalanuvchiga xabar yuborib bo‘lmadi.")
+            pass
+    
     except ForwardMessage.DoesNotExist:
         await message.reply("Foydalanuvchi topilmadi.")
