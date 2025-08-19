@@ -14,3 +14,24 @@ class SmsPenndingBot(BaseModel):
     
     class Meta:
         ordering = ['-created_at']
+
+class TelegramUser(BaseModel):
+    telegram_id = models.IntegerField()
+    first_name = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=128, blank=True, null=True)
+    username = models.CharField(max_length=128, blank=True, null=True, unique=True)
+
+    def __str__(self):
+        return self.first_name
+
+class ForwardMessage(models.Model):
+    user_id = models.BigIntegerField()
+    user_message_id = models.BigIntegerField()
+    group_message_id = models.BigIntegerField()
+    group_id = models.BigIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['group_message_id', 'group_id'])
+        ]

@@ -19,6 +19,7 @@ config = dotenv_values(".env")
 SECRET_KEY = config.get("SECRET_KEY")
 DEBUG = bool(config.get("DEBUG") == "True")
 BOT_TOKEN = config.get("BOT_TOKEN")
+GROUP_ID = config.get("GROUP_ID")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,6 +155,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # bot config
 BOT_TOKEN = BOT_TOKEN
+GROUP_ID = GROUP_ID
 
 # cors
 CORS_ALLOW_ALL_ORIGINS = True
