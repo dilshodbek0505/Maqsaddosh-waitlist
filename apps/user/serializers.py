@@ -44,6 +44,9 @@ class LoginSerializer(serializers.Serializer):
     code = serializers.CharField(max_length=5)
     refresh = serializers.CharField(max_length=255, read_only=True)
     access = serializers.CharField(max_length=255, read_only=True)
+    first_name = serializers.CharField(max_length=255, read_only=True)
+    last_name = serializers.CharField(max_length=255, read_only=True)
+    region = serializers.CharField(max_length=255, read_only=True)
 
     def create(self, validated_data):
         phone = validated_data['phone']
@@ -61,6 +64,10 @@ class LoginSerializer(serializers.Serializer):
         validated_data['refresh'] = str(refresh)
         validated_data['access'] = str(refresh.access_token)
 
+        validated_data['first_name'] = user.first_name
+        validated_data['last_name'] = user.last_name
+        validated_data['region'] = user.region
+    
         token_obj.delete()
         return validated_data
 
