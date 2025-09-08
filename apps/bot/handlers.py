@@ -37,6 +37,8 @@ async def get_contact(message: types.Message, state: FSMContext):
 
     generate_code = str(secrets.randbelow(9000) + 1000)
 
+    await message.answer(f"uuid: {token}, phone: {phone}")
+    
     try: 
         updated = await sync_to_async(
             lambda: SmsPenndingBot.objects.filter(uuid=token, phone=phone).update(code=generate_code)
