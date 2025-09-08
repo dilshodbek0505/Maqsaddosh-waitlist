@@ -35,25 +35,22 @@ async def get_contact(message: types.Message, state: FSMContext):
     token = data.get("token")
     phone = message.contact.phone_number.strip()
 
+    generate_code = str(secrets.randbelow(9000) + 1000)
+
     try: 
-        pending = await sync_to_async(
-        lambda: SmsPenndingBot.objects.filter(uuid=token, phone=phone).first()
+        updated = await sync_to_async(
+            lambda: SmsPenndingBot.objects.filter(uuid=token, phone=phone).update(code=generate_code)
         )()
     except Exception as err:
         await message.answer("Xatolik sodir bo'ldi!")
         print("Xatolik: ", str(err))
         return 
     
-    if not pending:
+    if not updated:
         await message.answer("Telfon raqam yoki token mos kelmadi!")
         return
     
-    generate_code = str(secrets.randbelow(9000) + 1000) 
-    pending.code = generate_code
-    await sync_to_async(pending.save)(update_fields=['code'])
-
-
-    await message.answer("Tasdiqlash kodingiz: <b>{}</b>".format(generate_code), parse_mode="HTML")
+    await message.answer(f"Tasdiqlash kodingiz: <b>{generate_code}</b>", parse_mode="HTML")
 
 
 @router.message(F.chat.type.in_(["private"]), CommandStart())
