@@ -15,7 +15,9 @@ class User(AbstractUser):
     )
     region = models.CharField(max_length=128,
                               blank=True, null=True)
-
+    likes_count = models.IntegerField(default=0)
+    feedbacks_count = models.IntegerField(default=0)
+    
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 

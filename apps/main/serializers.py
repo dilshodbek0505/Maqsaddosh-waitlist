@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.main.models import Like, Feedback, Comment, Post
+from apps.user.models import User
 from apps.user.serializers import UserSerializer
 
 
@@ -98,3 +99,15 @@ class CommentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         self.fields['user'] = UserSerializer()
         return super().to_representation(instance)
+    
+
+class LiderBoardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id",
+                  "first_name",
+                  "last_name",
+                  "region",
+                  "image",
+                  "likes_count",
+                  "feedbacks_count")

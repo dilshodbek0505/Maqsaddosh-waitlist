@@ -40,7 +40,7 @@ class Comment(BaseModel):
     text = models.TextField()
 
     def __str__(self):
-        return self.post
+        return self.post.title
 
 class Like(BaseModel):
     post = models.ForeignKey(Post,

@@ -1,4 +1,4 @@
-from django.db.models import Count, Q, Exists, OuterRef
+from django.db.models import Count, Q, Exists, OuterRef, Sum
 
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.generics import ListAPIView, CreateAPIView
@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from apps.main.models import Post, Like, Comment, Feedback
 from apps.main.serializers import FeedbackSerializer, PostSerializer \
-                                    ,CommentSerializer, LikeSerializer
+                                    ,CommentSerializer, LikeSerializer, LiderBoardSerializer
 
 
 class FeedbackView(mixins.CreateModelMixin,
@@ -116,3 +116,15 @@ class CommentView(GenericViewSet,
             qs = qs.filter(post__uuid=post_id)
         
         return qs
+    
+class LiderBoardView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = LiderBoardSerializer
+
+    def get_queryset(self):
+        from apps.user.models import User
+
+        qs = User.objects.filter(is_staff=False, is_superuser=False)
+        qs = qs.order_by("-likes_count", "-feedbacks_count")
+        return qs
+        
