@@ -1,3 +1,5 @@
+import re
+
 from asgiref.sync import sync_to_async
 from django.conf import settings
 
@@ -11,6 +13,17 @@ from apps.bot.state import MessageStateGroup
 
 router = Router()
 GROUP_ID = settings.GROUP_ID
+
+
+
+async def normalize_phone(phone: str) -> str:
+    phone = phone.strip()
+    phone = re.sub(r"\D", "", phone)  
+    
+    if phone.startswith("998"):
+        return f"+{phone}"
+    return f"+{phone}" if not phone.startswith("+") else phone
+
 
 @router.message(CommandStart(deep_link=True))
 async def start_command(message: types.Message, command: CommandObject, state: FSMContext):
@@ -34,11 +47,10 @@ async def get_contact(message: types.Message, state: FSMContext):
     
     token = data.get("token")
     phone = message.contact.phone_number.strip()
+    phone = await normalize_phone(phone)
 
     generate_code = str(secrets.randbelow(9000) + 1000)
 
-    await message.answer(f"uuid: {token}, phone: {phone}")
-    
     try: 
         updated = await sync_to_async(
             lambda: SmsPenndingBot.objects.filter(uuid=token, phone=phone).update(code=generate_code)
