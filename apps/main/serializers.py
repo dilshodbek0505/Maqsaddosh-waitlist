@@ -40,6 +40,7 @@ class PostSerializer(serializers.ModelSerializer):
             "title",
             "cover_image",
             "file",
+            "video_link",
             "body",
             "content_type",
             "likes_count",
