@@ -5,8 +5,9 @@ from apps.user.managers import CustomUserManager
 
 
 class User(AbstractUser):
-    username = None
-
+    username = models.CharField(max_length=128,
+                                blank=True, null=True,
+                                unique=True)
     phone = models.CharField(max_length=20,
                              unique=True)
     image = models.ImageField(
