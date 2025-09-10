@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from ckeditor.fields import RichTextField
 
 User = get_user_model()
 
@@ -24,7 +25,7 @@ class Post(BaseModel):
     cover_image = models.ImageField(upload_to="cover_images/", blank=True, null=True)
     file = models.FileField(upload_to="files/", blank=True, null=True)
     video_link = models.URLField(blank=True, null=True)
-    body = models.TextField()
+    body = RichTextField(config_name='awesome_ckeditor')
     content_type = models.CharField(max_length=20, choices=PostContentType.choices)
     
     def __str__(self):
