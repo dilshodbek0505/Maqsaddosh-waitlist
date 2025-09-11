@@ -70,7 +70,7 @@ class PostView(ListAPIView):
         else:
             qs = qs.annotate(is_liked=Exists(Like.objects.none()))
 
-        qs.order_by('-created_at')
+        qs.order_by('created_at')
         return qs
 
 class LikeView(CreateAPIView):
