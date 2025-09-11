@@ -116,6 +116,7 @@ class CommentView(GenericViewSet,
         if post_id:
             qs = qs.filter(post__uuid=post_id)
         
+        qs = qs.order_by('-created_at')
         return qs
     
 class LiderBoardView(ListAPIView):
