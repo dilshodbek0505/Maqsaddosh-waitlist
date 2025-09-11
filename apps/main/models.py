@@ -30,6 +30,9 @@ class Post(BaseModel):
     
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['-created_at']
 
 class Feedback(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
