@@ -140,6 +140,6 @@ class LiderBoardView(ListAPIView):
             )
         )
 
-        qs = qs.order_by("-likes_count", "-feedbacks_count")
+        qs = qs.order_by("-likes_count", "-feedbacks_count", "created_at")
         return qs
         
