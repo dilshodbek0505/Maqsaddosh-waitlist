@@ -43,7 +43,8 @@ class FeedbackView(mixins.CreateModelMixin,
             )
         else:
             qs = qs.annotate(is_liked=Exists(Like.objects.none()))
-
+        
+        qs = qs.order_by('-created_at')
         return qs
 
 class PostView(ListAPIView):

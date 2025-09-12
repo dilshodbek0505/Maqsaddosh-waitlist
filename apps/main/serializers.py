@@ -17,6 +17,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
             "text",
             "likes_count",
             "is_liked",
+            "created_at",
         )
         read_only_fields = ("user",)
 
@@ -89,6 +90,7 @@ class CommentSerializer(serializers.ModelSerializer):
             "post",
             "user",
             "text",
+            "created_at"
         )
         read_only_fields = ("user", )
         write_only_fields = ("post",)
