@@ -128,6 +128,18 @@ class LiderBoardView(ListAPIView):
         from apps.user.models import User
 
         qs = User.objects.filter(is_staff=False, is_superuser=False)
+        qs = qs.annotate(
+            likes_count=Count(
+                "feedback__like",
+                filter=Q(feedback__like__is_active=True),
+                distinct=True
+            ),
+            feedbacks_count=Count(
+                "feedback",
+                distinct=True
+            )
+        )
+
         qs = qs.order_by("-likes_count", "-feedbacks_count")
         return qs
         
