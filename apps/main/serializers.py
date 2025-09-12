@@ -114,6 +114,9 @@ class CommentSerializer(serializers.ModelSerializer):
     
 
 class LiderBoardSerializer(serializers.ModelSerializer):
+    likes_count = serializers.IntegerField(read_only=True)
+    feedbacks_count = serializers.IntegerField(read_only=True)
+    
     class Meta:
         model = User
         fields = ("id",
