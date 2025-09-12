@@ -34,10 +34,10 @@ async def start_command(message: types.Message, command: CommandObject, state: F
     
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
-            [types.KeyboardButton(text="Telfon raqam 📱", request_contact=True)]
+            [types.KeyboardButton(text="Telefon raqam 📱", request_contact=True)]
         ]
     , resize_keyboard=True)
-    await message.answer("Telfon raqamingizni yuboring:", reply_markup=kb)
+    await message.answer("Telefon raqamingizni yuboring:", reply_markup=kb)
 
 
 @router.message(F.contact)
@@ -61,7 +61,7 @@ async def get_contact(message: types.Message, state: FSMContext):
         return 
     
     if not updated:
-        await message.answer("Telfon raqam yoki token mos kelmadi!")
+        await message.answer("Telefon raqam yoki token mos kelmadi!")
         return
     
     await message.answer(f"Tasdiqlash kodingiz: <b>{generate_code}</b>", parse_mode="HTML")
