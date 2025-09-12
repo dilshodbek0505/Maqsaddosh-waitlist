@@ -16,8 +16,7 @@ class User(AbstractUser):
     )
     region = models.CharField(max_length=128,
                               blank=True, null=True)
-    likes_count = models.IntegerField(default=0)
-    feedbacks_count = models.IntegerField(default=0)
+
     telegram_id = models.IntegerField(null=True, blank=True)
     
     USERNAME_FIELD = 'phone'
