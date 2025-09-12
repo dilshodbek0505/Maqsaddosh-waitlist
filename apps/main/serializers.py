@@ -83,6 +83,8 @@ class LikeSerializer(serializers.ModelSerializer):
         return data
 
 class CommentSerializer(serializers.ModelSerializer):
+    is_owner = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
         fields = (
@@ -90,10 +92,17 @@ class CommentSerializer(serializers.ModelSerializer):
             "post",
             "user",
             "text",
+            "is_owner",
             "created_at"
         )
         read_only_fields = ("user", )
         write_only_fields = ("post",)
+
+    def get_is_owner(self, obj):
+        request = self.context.get("request")
+        if request and request.user and request.user.is_authenticated:
+            return obj.user_id == request.user.id
+        return False
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
